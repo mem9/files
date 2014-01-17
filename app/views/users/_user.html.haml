@@ -1,0 +1,36 @@
+.modal{:id => "role-options-#{user.id}"}
+  = form_for user, :url => user_path(user), :html => {:method => :put, :class => 'form-horizontal' } do |f|
+
+    .row
+      .col-md-6
+        .pull-right
+          %a.close{"data-dismiss" => "modal"} ×
+        %div
+          = f.label :name
+          %br/
+          = f.text_field :name, class:"form-control"
+        %br
+        %br
+        %div
+          = f.label :email
+          %br/
+          = f.email_field :email, class:"form-control"
+        %div
+          = f.label :password
+          %i (Оставьте поле пустым, если не меняете пароль)
+          %br/
+          = f.password_field :password, class:"form-control"
+        %div
+          = f.label :password_confirmation
+          %i (Оставьте поле пустым, если не меняете пароль)
+          %br/
+          = f.password_field :password_confirmation, class:"form-control"
+
+    .modal-header
+
+      %h3 Изменение роли
+    .modal-body
+      = collection_select :user, :role_ids, Role.all, :id, :name, checked: user.role_ids.first
+    .modal-footer
+      = f.submit "Изменить роль", :class => "btn"
+      %a.btn{"data-dismiss" => "modal", :href => "#"} Закрыть
